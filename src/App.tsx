@@ -11,6 +11,7 @@ import { EnfermagemLayout } from './layouts/EnfermagemLayout';
 import { MedicoLayout } from './layouts/MedicoLayout';
 import { GestaoLayout } from './layouts/GestaoLayout';
 import { PainelQuiosquePage } from './pages/PainelQuiosquePage';
+import { HospitalProvider } from './context/HospitalContext';
 
 const queryClient = new QueryClient();
 
@@ -44,61 +45,63 @@ function RootRedirect() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<RootRedirect />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/cadastro" element={<CadastroPage />} />
-          <Route path="/supabase" element={<SupabasePage />} />
+      <HospitalProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<RootRedirect />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/cadastro" element={<CadastroPage />} />
+            <Route path="/supabase" element={<SupabasePage />} />
 
-          <Route
-            path="/recepcao/*"
-            element={
-              <ProtectedRoute allowedRoles={['recepcao']}>
-                <RecepcaoLayout />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/recepcao/*"
+              element={
+                <ProtectedRoute allowedRoles={['recepcao']}>
+                  <RecepcaoLayout />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/enfermagem/*"
-            element={
-              <ProtectedRoute allowedRoles={['enfermagem']}>
-                <EnfermagemLayout />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/enfermagem/*"
+              element={
+                <ProtectedRoute allowedRoles={['enfermagem']}>
+                  <EnfermagemLayout />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/medico/*"
-            element={
-              <ProtectedRoute allowedRoles={['medico']}>
-                <MedicoLayout />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/medico/*"
+              element={
+                <ProtectedRoute allowedRoles={['medico']}>
+                  <MedicoLayout />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/gestao/*"
-            element={
-              <ProtectedRoute allowedRoles={['gestao']}>
-                <GestaoLayout />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/gestao/*"
+              element={
+                <ProtectedRoute allowedRoles={['gestao']}>
+                  <GestaoLayout />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/painel"
-            element={
-              <ProtectedRoute allowedRoles={['painel']}>
-                <PainelQuiosquePage />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/painel"
+              element={
+                <ProtectedRoute allowedRoles={['painel']}>
+                  <PainelQuiosquePage />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+      </HospitalProvider>
     </QueryClientProvider>
   );
 }
